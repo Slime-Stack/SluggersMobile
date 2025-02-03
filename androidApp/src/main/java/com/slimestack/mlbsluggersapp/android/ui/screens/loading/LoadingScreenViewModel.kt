@@ -2,7 +2,7 @@ package com.slimestack.mlbsluggersapp.android.ui.screens.loading
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.slimestack.mlbsluggersapp.android.dataModel.sealed.TeamDetailsUiState
+import com.slimestack.mlbsluggersapp.android.ui.state.sealed.TeamDetailsUiState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

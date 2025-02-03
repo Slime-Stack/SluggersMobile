@@ -20,7 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.slimestack.mlbsluggersapp.android.dataModel.sealed.TeamDetailsUiState
+import com.slimestack.mlbsluggersapp.android.ui.state.sealed.TeamDetailsUiState
 import com.slimestack.mlbsluggersapp.android.ui.components.baseComposables.BaseBackground
 import com.slimestack.mlbsluggersapp.android.ui.components.loading.LoadingCard
 import com.slimestack.mlbsluggersapp.data.models.Team

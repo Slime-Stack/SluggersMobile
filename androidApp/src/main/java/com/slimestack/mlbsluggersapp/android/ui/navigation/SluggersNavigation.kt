@@ -1,4 +1,4 @@
-package com.slimestack.mlbsluggersapp.android.navigation
+package com.slimestack.mlbsluggersapp.android.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState

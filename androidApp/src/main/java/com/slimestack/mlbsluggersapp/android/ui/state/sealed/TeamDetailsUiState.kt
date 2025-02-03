@@ -1,4 +1,4 @@
-package com.slimestack.mlbsluggersapp.android.dataModel.sealed
+package com.slimestack.mlbsluggersapp.android.ui.state.sealed
 
 sealed class TeamDetailsUiState {
     data object Loading : TeamDetailsUiState()

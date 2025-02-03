@@ -3,7 +3,7 @@ package com.slimestack.mlbsluggersapp.android.ui.screens.highlights
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.slimestack.mlbsluggersapp.android.dataModel.sealed.StoryboardCarouselUiState
+import com.slimestack.mlbsluggersapp.android.ui.state.sealed.StoryboardCarouselUiState
 import com.slimestack.mlbsluggersapp.data.test_data.HighlightsHelper
 import com.slimestack.mlbsluggersapp.repositories.implementations.HighlightsRepository
 import kotlinx.coroutines.flow.MutableStateFlow
