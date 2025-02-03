@@ -2,11 +2,12 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.kotlinSerialization)
 }
 
 android {
     namespace = "com.slimestack.mlbsluggersapp.android"
-    compileSdk = 34
+    compileSdk = 35
     defaultConfig {
         applicationId = "com.slimestack.mlbsluggersapp.android"
         minSdk = 26
@@ -38,9 +39,18 @@ android {
 
 dependencies {
     implementation(projects.shared)
+    implementation(libs.coil.compose)
+    implementation(libs.coil.svg)
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.material3)
     implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.exoplayer.dash)
+    implementation(libs.androidx.media3.ui)
+
     debugImplementation(libs.compose.ui.tooling)
 }
