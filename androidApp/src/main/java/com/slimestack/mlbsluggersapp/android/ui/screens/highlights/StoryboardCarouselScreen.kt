@@ -1,5 +1,14 @@
 package com.slimestack.mlbsluggersapp.android.ui.screens.highlights
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -11,6 +20,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -25,11 +37,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.geometry.center
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.LinearGradientShader
+import androidx.compose.ui.graphics.Shader
+import androidx.compose.ui.graphics.ShaderBrush
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -43,18 +62,12 @@ import com.slimestack.mlbsluggersapp.data.test_data.HighlightsHelper
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.Locale
-import androidx.compose.animation.Crossfade
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.togetherWith
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
 
 @Composable
-fun StoryboardCarouselScreen(storyboard: Storyboard = remember { HighlightsHelper.fetchStoryboard(775296) }) {
+fun StoryboardCarouselScreen(
+    storyboard: Storyboard = remember { HighlightsHelper.fetchStoryboard(775296) },
+    onNavigateBack: () -> Unit = {}
+) {
     var currentSceneIndex by remember { mutableIntStateOf(0) }
     val currentScene = storyboard.scenes[currentSceneIndex]
     val context = LocalContext.current
@@ -63,39 +76,109 @@ fun StoryboardCarouselScreen(storyboard: Storyboard = remember { HighlightsHelpe
     var audioProgress by remember { mutableFloatStateOf(0f) }
     var shouldAdvanceScene by remember { mutableStateOf(false) }
 
+    val largeRadialGradient = object : ShaderBrush() {
+        override fun createShader(size: Size): Shader {
+            val biggerDimension = maxOf(size.height, size.width)
+            return LinearGradientShader(
+                from = size.center + Offset(0f, biggerDimension / 4f),
+                to = size.center + Offset(0f, biggerDimension / 2f),
+                colors = listOf(Color.Transparent, Color.Black.copy(alpha = 0.9f)),
+                colorStops = listOf(0f, 0.95f),
+
+            )
+        }
+    }
     Box(
         modifier = Modifier
             .background(Color.Black)
             .fillMaxSize()
     ) {
-        // Wrap the AsyncImage in AnimatedContent for smooth transitions
-        AnimatedContent(
-            targetState = currentScene,
-            transitionSpec = {
-                // Slide and fade animation
-                (slideInHorizontally { width -> width } + fadeIn(
-                    animationSpec = tween(
-                        durationMillis = 300,
-                        easing = LinearEasing
-                    )
-                )).togetherWith(
-                    slideOutHorizontally { width -> -width } + fadeOut(
-                        animationSpec = tween(
-                            durationMillis = 300,
-                            easing = LinearEasing
+        Column {
+            Box (
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(4f),
+            ) {
+                // Wrap the AsyncImage in AnimatedContent for smooth transitions
+                AnimatedContent(
+                    targetState = currentScene,
+                    transitionSpec = {
+                        // Slide and fade animation
+                        (slideInHorizontally { width -> width } + fadeIn(
+                            animationSpec = tween(
+                                durationMillis = 300,
+                                easing = LinearEasing
+                            )
+                        )).togetherWith(
+                            slideOutHorizontally { width -> -width } + fadeOut(
+                                animationSpec = tween(
+                                    durationMillis = 300,
+                                    easing = LinearEasing
+                                )
+                            )
                         )
+                    },
+                    label = "scene transition"
+                ) { targetScene ->
+                    AsyncImage(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        model = targetScene.imageUrl,
+                        contentDescription = targetScene.visualDescription,
+                        contentScale = ContentScale.Crop,
+                        error = painterResource(R.drawable.game_775296_scene_1)
                     )
-                )
-            },
-            label = "scene transition"
-        ) { targetScene ->
-            AsyncImage(
-                model = targetScene.imageUrl,
-                contentDescription = targetScene.visualDescription,
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop,
-                error = painterResource(R.drawable.game_775296_scene_1)
-            )
+                    Box(Modifier.fillMaxSize().background(largeRadialGradient))
+                }
+            }
+
+            // Caption with background
+            Box (
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .shadow(
+                        elevation = 48.dp,
+                        shape = RoundedCornerShape(16.dp),
+                        clip = false,
+                        ambientColor = Color.Black.copy(alpha = 0.6f)
+                    )
+                    .weight(1f)
+            ) {
+                AnimatedContent(
+                    targetState = when (deviceLanguage) {
+                        "es" -> currentScene.captionEs
+                        "ja" -> currentScene.captionJa
+                        else -> currentScene.captionEn
+                    },
+                    transitionSpec = {
+                        fadeIn(animationSpec = tween(300)) togetherWith
+                                fadeOut(animationSpec = tween(300))
+                    },
+                    label = "caption transition"
+                ) { caption ->
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .shadow(
+                                elevation = 48.dp,
+                                shape = RoundedCornerShape(16.dp),
+                                clip = false,
+                                ambientColor = Color.Black.copy(alpha = 0.6f)
+                            )
+                    ) {
+                        Text(
+                            text = caption,
+                            style = MaterialTheme.typography.headlineSmall,
+                            color = Color.White,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp)
+                                .background(Color.Transparent)
+                        )
+                    }
+                }
+            }
         }
 
         // Left tap area (previous)
@@ -109,7 +192,7 @@ fun StoryboardCarouselScreen(storyboard: Storyboard = remember { HighlightsHelpe
                     }
                 }
         )
-        
+
         // Center tap area (pause/play)
         Box(
             modifier = Modifier
@@ -141,7 +224,7 @@ fun StoryboardCarouselScreen(storyboard: Storyboard = remember { HighlightsHelpe
         // Wrap the progress indicators in Crossfade
         Crossfade(
             targetState = currentSceneIndex,
-            animationSpec = tween(durationMillis = 1000),
+            animationSpec = tween(durationMillis = 600),
             label = "progress indicator transition"
         ) { targetIndex ->
             Row(
@@ -167,40 +250,23 @@ fun StoryboardCarouselScreen(storyboard: Storyboard = remember { HighlightsHelpe
                     )
                 }
             }
-        }
 
-        // Wrap the caption in AnimatedContent
-        AnimatedContent(
-            targetState = when (deviceLanguage) {
-                "es" -> currentScene.captionEs
-                "ja" -> currentScene.captionJa
-                else -> currentScene.captionEn
-            },
-            transitionSpec = {
-                fadeIn(animationSpec = tween(300)) togetherWith 
-                fadeOut(animationSpec = tween(300))
-            },
-            label = "caption transition"
-        ) { caption ->
-            Box(
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .fillMaxWidth()
-                    .background(
-                        brush = Brush.verticalGradient(
-                            colors = listOf(Color.Transparent, Color.Black.copy(alpha = 0.6f))
-                        )
-                    )
-                    .padding(16.dp)
-            ) {
-                Text(
-                    text = caption,
-                    style = MaterialTheme.typography.headlineSmall,
-                    color = Color.White,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth()
+        // Close Button
+        Box(modifier = Modifier
+            .align(Alignment.TopEnd)
+            .padding(top = 24.dp, end = 8.dp)
+            .clickable {
+                onNavigateBack.invoke()
+            }
+        ){
+            IconButton(onClick = { onNavigateBack() } ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_close),
+                    contentDescription = stringResource(id = R.string.close),
+                    tint = Color.White
                 )
             }
+        }
         }
     }
 
@@ -219,7 +285,7 @@ fun StoryboardCarouselScreen(storyboard: Storyboard = remember { HighlightsHelpe
             audioPlayer.setMediaItem(mediaItem)
             audioPlayer.prepare()
             audioPlayer.play()
-            
+
             // Monitor for audio completion
             launch {
                 while (!shouldAdvanceScene) {
@@ -266,7 +332,6 @@ fun StoryboardCarouselScreen(storyboard: Storyboard = remember { HighlightsHelpe
 @Preview
 @Composable
 fun StoryboardCarouselPreview() {
-    val jsonString = HighlightsHelper.storyboardJsonStr775294
     val storyboard = HighlightsHelper.fetchStoryboard(775296)
     StoryboardCarouselScreen(storyboard)
 }
