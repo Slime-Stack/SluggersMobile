@@ -51,6 +51,7 @@ dependencies {
     implementation(libs.androidx.media3.exoplayer)
     implementation(libs.androidx.media3.exoplayer.dash)
     implementation(libs.androidx.media3.ui)
+    implementation(libs.ui.text.google.fonts)
 
     debugImplementation(libs.compose.ui.tooling)
 }

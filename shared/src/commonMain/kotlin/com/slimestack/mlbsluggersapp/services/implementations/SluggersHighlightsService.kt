@@ -31,9 +31,10 @@ class SluggersHighlightsService(
         )
         return try {
             if (response.status.value in 200..299) {
+                logger.withTag("SluggersHighlightService").i("Retrieving highlights...")
                 response.body<HighlightsResponse>()
             } else {
-                val error = "Failed to get highlights. Error code: ${response.status.value}"
+                val error = "Failed to get highlights. Error code: ${response.status.value}: ${response.status.description}"
                 logger.withTag("SluggersHighlightService").e(error)
                 throw Exception(error)
             }
