@@ -8,6 +8,5 @@ data class Storyboard(
     val teaserSummary: String,
     val storyImageUrl: String,
     val storyImagenPrompt: String,
-    val storyImageResId: Int? = null,
     val scenes: List<Scene>
 )

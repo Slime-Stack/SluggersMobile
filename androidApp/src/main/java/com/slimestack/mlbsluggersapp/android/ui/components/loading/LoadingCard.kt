@@ -92,10 +92,10 @@ fun LoadingCard(
 fun LoadingCardPreview() {
     LoadingCard(
         team = Team(
-            119,
+            "logoUrl",
             "Los Angeles Dodgers",
             "Dodgers",
-            "logoUrl"
+            119
         ),
         triviaText = "This is a sample trivia text",
         alpha = 1f

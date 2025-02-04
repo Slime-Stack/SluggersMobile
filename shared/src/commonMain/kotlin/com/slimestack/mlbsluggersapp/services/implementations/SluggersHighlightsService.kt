@@ -7,6 +7,7 @@ import com.slimestack.mlbsluggersapp.network.implementations.MLBSluggersClient
 import com.slimestack.mlbsluggersapp.network.interfaces.MLBSluggersClientInterface
 import com.slimestack.mlbsluggersapp.services.interfaces.SluggersHighlightsServiceInterface
 import io.ktor.client.call.body
+import kotlinx.serialization.Serializable
 
 class SluggersHighlightsService(
     private val client: MLBSluggersClientInterface,
@@ -23,14 +24,14 @@ class SluggersHighlightsService(
     )
 
     @Throws(Exception::class)
-    override suspend fun getHighlights(url: String): List<Highlight> {
+    override suspend fun getHighlights(url: String): HighlightsResponse {
         val response = client.getClientHttpResponse(
             endpoint = url,
             parameters = mapOf()
         )
         return try {
             if (response.status.value in 200..299) {
-                response.body<List<Highlight>>()
+                response.body<HighlightsResponse>()
             } else {
                 val error = "Failed to get highlights. Error code: ${response.status.value}"
                 logger.withTag("SluggersHighlightService").e(error)
@@ -44,3 +45,6 @@ class SluggersHighlightsService(
         }
     }
 }
+
+@Serializable
+data class HighlightsResponse(val highlights: List<Highlight>)

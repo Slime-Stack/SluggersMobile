@@ -4,8 +4,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Team(
-    val teamId: Int,
+    val logoUrl: String,
     val name: String,
     val shortName: String,
-    val logoUrl: String
+    val teamId: Int
 )

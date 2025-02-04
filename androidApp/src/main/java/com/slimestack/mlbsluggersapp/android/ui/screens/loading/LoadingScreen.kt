@@ -90,10 +90,10 @@ fun LoadingScreen(
 fun LoadingScreenPreview() {
     LoadingScreen(
         team = Team(
-            119,
+            "logoUrl",
             "Los Angeles Dodgers",
             "Dodgers",
-            "logoUrl"
+            119
         ),
         navController = NavController(LocalContext.current)
     )
