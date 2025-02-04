@@ -5,6 +5,7 @@ Welcome to the Sluggers App! This application provides an exciting way to experi
 ## Table of Contents
 
 - [Features](#features)
+- [Demo](#demo)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Contributing](#contributing)
@@ -15,6 +16,14 @@ Welcome to the Sluggers App! This application provides an exciting way to experi
 - Interactive storyboards for baseball games.
 - Multi-language support for captions and audio.
 - Available on both iOS and Android platforms.
+
+## Demo
+
+### Video Walk through
+
+|        **AFTER:**         |
+|:-------------------------:| 
+| <video width="350" src="http://slimestack.com//sluggers-video">  |
 
 ## Installation
 
