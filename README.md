@@ -19,9 +19,9 @@ Welcome to the Sluggers App! This application provides an exciting way to experi
 
 ## Demo
 
-|        **Video Walk through:**         |
+|        **Video Walk throughs:**         |
 |:-------------------------:| 
-| <video width="500" src="https://github.com/user-attachments/assets/bf1138bd-f583-4077-be3d-a83b57c0d35b">  |
+| <video width="400" src="https://github.com/user-attachments/assets/bf1138bd-f583-4077-be3d-a83b57c0d35b" label="Sluggers on Android">  |
 
 ## Installation
 
@@ -33,7 +33,7 @@ Welcome to the Sluggers App! This application provides an exciting way to experi
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/sluggers-app.git
+git clone https://github.com/Slime-Stack/SluggersMobile.git
 cd sluggers-app
 ```
 
@@ -42,6 +42,7 @@ cd sluggers-app
 1. Open the `iosApp/iosApp.xcodeproj` in Xcode.
 2. Select your target device or simulator.
 3. Click the **Run** button to build and launch the app.
+4. **TODO**: add iOS UI
 
 ### Android Setup
 
