@@ -62,16 +62,17 @@ import com.slimestack.mlbsluggersapp.data.test_data.HighlightsHelper
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.Locale
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun StoryboardCarouselScreen(
-    storyboard: Storyboard = remember { HighlightsHelper.fetchStoryboard(775296) },
+    storyboard: Storyboard,
+    viewModel: StoryboardCarouselViewModel = viewModel(),
     onNavigateBack: () -> Unit = {}
 ) {
     var currentSceneIndex by remember { mutableIntStateOf(0) }
     val currentScene = storyboard.scenes[currentSceneIndex]
     val context = LocalContext.current
-    val audioPlayer = remember { ExoPlayer.Builder(context).build() }
     val deviceLanguage = Locale.getDefault().language
     var audioProgress by remember { mutableFloatStateOf(0f) }
     var shouldAdvanceScene by remember { mutableStateOf(false) }
@@ -200,10 +201,10 @@ fun StoryboardCarouselScreen(
                 .fillMaxWidth(0.4f)
                 .align(Alignment.TopCenter)
                 .clickable {
-                    if (audioPlayer.isPlaying) {
-                        audioPlayer.pause()
+                    if (viewModel.audioPlayer?.isPlaying == true) {
+                        viewModel.audioPlayer?.pause()
                     } else {
-                        audioPlayer.play()
+                        viewModel.audioPlayer?.play()
                     }
                 }
         )
@@ -270,37 +271,42 @@ fun StoryboardCarouselScreen(
         }
     }
 
-    // Audio handling with auto-advance
-    LaunchedEffect(currentSceneIndex) {
+    LaunchedEffect(Unit) {
+        viewModel.initializePlayer(context)
+    }
+
+    LaunchedEffect(currentScene) {
         shouldAdvanceScene = false
         val audioUrl = when (deviceLanguage) {
             "es" -> currentScene.audioUrlEs
             "ja" -> currentScene.audioUrlJa
             else -> currentScene.audioUrlEn
         }
-        audioPlayer.stop()
-        audioPlayer.clearMediaItems()
+        
+        viewModel.audioPlayer?.stop()
+        viewModel.audioPlayer?.clearMediaItems()
+        
         if (audioUrl.isNotEmpty()) {
             val mediaItem = MediaItem.fromUri(audioUrl)
-            audioPlayer.setMediaItem(mediaItem)
-            audioPlayer.prepare()
-            audioPlayer.play()
+            viewModel.audioPlayer?.setMediaItem(mediaItem)
+            viewModel.audioPlayer?.prepare()
+            viewModel.audioPlayer?.play()
 
-            // Monitor for audio completion
+            // Single launch for monitoring
             launch {
                 while (!shouldAdvanceScene) {
-                    if (audioPlayer.playbackState == Player.STATE_ENDED) {
-                        delay(500) // Wait 3 seconds after audio completes
+                    if (viewModel.audioPlayer?.playbackState == Player.STATE_ENDED) {
+                        delay(500)
                         if (currentSceneIndex < storyboard.scenes.size - 1) {
                             currentSceneIndex++
                         }
                         shouldAdvanceScene = true
+                        break
                     }
-                    delay(100) // Check every 100ms
+                    delay(100)
                 }
             }
         } else {
-            // If no audio, wait 5 seconds before advancing
             launch {
                 delay(5000)
                 if (!shouldAdvanceScene && currentSceneIndex < storyboard.scenes.size - 1) {
@@ -311,20 +317,19 @@ fun StoryboardCarouselScreen(
         }
     }
 
-    // Update progress
-    LaunchedEffect(Unit) {
+    LaunchedEffect(viewModel.audioPlayer) {
         while (true) {
-            if (audioPlayer.duration > 0) {
-                audioProgress = audioPlayer.currentPosition.toFloat() / audioPlayer.duration.toFloat()
+            if (viewModel.audioPlayer?.duration!! > 0) {
+                audioProgress = viewModel.audioPlayer?.currentPosition?.toFloat()
+                    ?: (0f / (viewModel.audioPlayer?.duration?.toFloat() ?: 0f))
             }
-            delay(16) // Update roughly 60 times per second
+            delay(16)
         }
     }
 
-    // Cleanup
     DisposableEffect(Unit) {
         onDispose {
-            audioPlayer.release()
+            viewModel.audioPlayer?.release()
         }
     }
 }
