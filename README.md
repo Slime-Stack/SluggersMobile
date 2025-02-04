@@ -19,11 +19,9 @@ Welcome to the Sluggers App! This application provides an exciting way to experi
 
 ## Demo
 
-### Video Walk through
-
-|        **AFTER:**         |
+|        **Video Walk through:**         |
 |:-------------------------:| 
-| <video width="350" src="http://slimestack.com//sluggers-video">  |
+| <video width="500" src="https://github.com/user-attachments/assets/bf1138bd-f583-4077-be3d-a83b57c0d35b">  |
 
 ## Installation
 
