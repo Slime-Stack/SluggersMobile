@@ -35,7 +35,7 @@ fun GameScheduleItem(data: GameScheduleData, onGameClicked: (Int) -> Unit) {
             .padding(16.dp)
             .fillMaxWidth()
             .clip(RoundedCornerShape(16.dp))
-            .clickable { onGameClicked(data.gameId) }
+            .clickable { onGameClicked(data.gamePk) }
     ){
         AsyncImage(
             model = data.imageUrl,

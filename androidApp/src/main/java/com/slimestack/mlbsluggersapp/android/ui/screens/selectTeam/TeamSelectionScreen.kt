@@ -125,19 +125,10 @@ fun TeamTile(team: Team, onTeamSelected: (Team) -> Unit) {
 @Composable
 fun TeamSelectionScreenPreview() {
     val teamsForPreview = listOf(
-        Team(108, "Los Angeles Angels", "Angels", "https://www.mlbstatic.com/team-logos/108.svg"),
-        Team(109, "Arizona Diamondbacks", "D-backs", "https://www.mlbstatic.com/team-logos/109.svg"),
-        Team(112, "Chicago Cubs", "Cubs", "https://www.mlbstatic.com/team-logos/112.svg"),
-        Team(113, "Cincinnati Reds", "Reds", "https://www.mlbstatic.com/team-logos/113.svg"),
-        Team(114, "Cleveland Guardians", "Guardians", "https://www.mlbstatic.com/team-logos/114.svg"),
-        Team(115, "Colorado Rockies", "Rockies", "https://www.mlbstatic.com/team-logos/115.svg"),
-        Team(116, "Detroit Tigers", "Tigers", "https://www.mlbstatic.com/team-logos/116.svg"),
-        Team(117, "Houston Astros", "Astros", "https://www.mlbstatic.com/team-logos/117.svg"),
-        Team(118, "Kansas City Royals", "Royals", "https://www.mlbstatic.com/team-logos/118.svg"),
-        Team(119, "Los Angeles Dodgers", "Dodgers", "https://www.mlbstatic.com/team-logos/119.svg"),
-        Team(145, "Chicago White Sox", "White Sox", "https://www.mlbstatic.com/team-logos/145.svg"),
-        Team(146, "Miami Marlins", "Marlins", "https://www.mlbstatic.com/team-logos/146.svg"),
-        Team(147, "New York Yankees", "Yankees", "https://www.mlbstatic.com/team-logos/147.svg"),
+        Team("https://www.mlbstatic.com/team-logos/108.svg", "Los Angeles Angels", "Angels", 108),
+        Team("https://www.mlbstatic.com/team-logos/109.svg", "Arizona Diamondbacks", "D-backs",  109),
+        Team("https://www.mlbstatic.com/team-logos/119.svg", "Los Angeles Dodgers", "Dodgers", 119),
+        Team("https://www.mlbstatic.com/team-logos/147.svg", "New York Yankees", "Yankees", 147),
     )
     BaseBackground {
         TeamSelectionScreen(teams = teamsForPreview, onTeamSelected = {})
