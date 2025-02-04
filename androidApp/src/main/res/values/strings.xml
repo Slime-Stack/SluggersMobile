@@ -1,0 +1,5 @@
+<resources>
+        <string name="get_started">Get Started</string>
+    <string name="close">Close</string>
+    <string name="app_name">Sluggers</string>
+</resources>
