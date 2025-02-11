@@ -16,10 +16,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.slimestack.mlbsluggersapp.android.R
 import com.slimestack.mlbsluggersapp.android.ui.state.sealed.TeamDetailsUiState
 import com.slimestack.mlbsluggersapp.android.ui.components.baseComposables.BaseBackground
 import com.slimestack.mlbsluggersapp.android.ui.components.loading.LoadingCard
@@ -41,7 +43,9 @@ fun LoadingScreen(
     )
 
     LaunchedEffect(key1 = team) {
-        viewModel.fetchTeamDetails(team.teamId)
+        val errorMessage = navController.context.getString(R.string
+            .error_failed_to_fetch_team_details)
+        viewModel.fetchTeamDetails(team.teamId, errorMessage)
     }
 
     when (uiState) {
@@ -70,7 +74,7 @@ fun LoadingScreen(
                 }
             } else {
                 Text(
-                    text = "No team details available",
+                    text = stringResource(R.string.error_no_team_details_available),
                     color = Color.White
                 )
             }
@@ -79,7 +83,7 @@ fun LoadingScreen(
         is TeamDetailsUiState.Error -> {
             val errorMessage = (uiState as TeamDetailsUiState.Error).message
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text(text = "Error: $errorMessage")
+                Text(text = stringResource(R.string.user_facing_error_message, errorMessage))
             }
         }
     }
