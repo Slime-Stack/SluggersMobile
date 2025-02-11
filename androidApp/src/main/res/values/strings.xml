@@ -1,5 +1,17 @@
 <resources>
-        <string name="get_started">Get Started</string>
-    <string name="close">Close</string>
+    <string name="get_started">Get Started</string>
+    <string name="close_btn">Close</string>
     <string name="app_name">Sluggers</string>
+    <string name="a11y_background_image">Background Image</string>
+    <string name="a11y_logo">%1$s Logo</string>
+    <string name="selected_team_name">Team</string>
+    <string name="team_selection_choose_your">Choose your</string>
+    <string name="error_no_team_details_available">No team details available</string>
+    <string name="games_list_hey_there">Hey there,</string>
+    <string name="short_name_fan">%1$s Fan!</string>
+    <string name="recent_highlights_label">Recent Highlights</string>
+    <string name="description_see_the_latest_action">See the latest action from your favorite team!</string>
+    <string name="ally_see_more_icon">See More</string>
+    <string name="user_facing_error_message">Error: %1$s</string>
+    <string name="error_failed_to_fetch_team_details">Failed to fetch team details</string>
 </resources>

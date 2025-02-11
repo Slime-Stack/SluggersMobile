@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="get_started">開始する</string>
+    <string name="close_btn">閉じる</string>
+    <string name="app_name">スラッガーズ</string>
+    <string name="a11y_background_image">背景画像</string>
+    <string name="a11y_logo">%1$sのロゴ</string>
+    <string name="selected_team_name">チーム</string>
+    <string name="team_selection_choose_your">あなたの</string>
+    <string name="error_no_team_details_available">チームの詳細がありません</string>
+    <string name="games_list_hey_there">こんにちは、</string>
+    <string name="short_name_fan">%1$sファン！</string>
+    <string name="recent_highlights_label">最近のハイライト</string>
+    <string name="description_see_the_latest_action">お気に入りのチームの最新アクションをご覧ください！</string>
+    <string name="ally_see_more_icon">もっと見る</string>
+    <string name="user_facing_error_message">エラー: %1$s</string>
+    <string name="error_failed_to_fetch_team_details">チームの詳細の取得に失敗しました</string>
+</resources>
