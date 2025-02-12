@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -48,7 +49,7 @@ fun TeamSelectionScreen(teams: List<Team>, onTeamSelected: (Team) -> Unit) {
                     .padding(16.dp)
             ) {
                 Text(
-                    text = "Choose your",
+                    text = stringResource(R.string.team_selection_choose_your),
                     style = TextStyle(
                         fontFamily = FontFamily.Default,
                         fontWeight = FontWeight(500),
@@ -59,7 +60,7 @@ fun TeamSelectionScreen(teams: List<Team>, onTeamSelected: (Team) -> Unit) {
                     color = Color.White
                 )
                 Text(
-                    text = "Team",
+                    text = stringResource(R.string.selected_team_name),
                     style = TextStyle(
                         fontFamily = FontFamily.Default,
                         fontWeight = FontWeight(600),
@@ -104,7 +105,7 @@ fun TeamTile(team: Team, onTeamSelected: (Team) -> Unit) {
                     .crossfade(true)
                     .build(),
                   placeholder = painterResource(R.drawable.ic_launcher),
-                contentDescription = "${team.name} Logo",
+                contentDescription = stringResource(R.string.a11y_logo, team.name),
                 modifier = Modifier.size(50.dp),
                 contentScale = ContentScale.Fit
              )

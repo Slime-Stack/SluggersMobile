@@ -33,14 +33,14 @@ class LoadingScreenViewModel : ViewModel() {
         startTriviaAnimation()
     }
 
-    fun fetchTeamDetails(teamId: Int) {
+    fun fetchTeamDetails(teamId: Int, errorMessage: String) {
         viewModelScope.launch {
             _uiState.value = TeamDetailsUiState.Loading
             try {
                 val teamDetails = simulateNetworkRequest(teamId)
                 _uiState.value = TeamDetailsUiState.Success(teamDetails)
             } catch (e: Exception) {
-                _uiState.value = TeamDetailsUiState.Error("Failed to fetch team details")
+                TeamDetailsUiState.Error(errorMessage).also { _uiState.value = it }
             }
         }
     }

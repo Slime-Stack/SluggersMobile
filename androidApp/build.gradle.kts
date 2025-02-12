@@ -39,6 +39,7 @@ android {
 
 dependencies {
     implementation(projects.shared)
+    implementation(libs.androidx.core.splashscreen)
     implementation(libs.coil.compose)
     implementation(libs.coil.svg)
     implementation(libs.compose.ui)

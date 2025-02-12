@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="get_started">Empezar</string>
+    <string name="close_btn">Cerrar</string>
+    <string name="app_name">Sluggers</string>
+    <string name="a11y_background_image">Imagen de Fondo</string>
+    <string name="a11y_logo">Logo de %1$s</string>
+    <string name="selected_team_name">Equipo</string>
+    <string name="team_selection_choose_your">Escoge tu</string>
+    <string name="error_no_team_details_available">No hay detalles del equipo disponibles</string>
+    <string name="games_list_hey_there">Hola,</string>
+    <string name="short_name_fan">¡Fan de %1$s!</string>
+    <string name="recent_highlights_label">Momentos Destacados Recientes</string>
+    <string name="description_see_the_latest_action">¡Mira la acción más reciente de tu equipo favorito!</string>
+    <string name="ally_see_more_icon">Ver Más</string>
+    <string name="user_facing_error_message">Error: %1$s</string>
+    <string name="error_failed_to_fetch_team_details">No se pudieron obtener los detalles del equipo</string>
+</resources>

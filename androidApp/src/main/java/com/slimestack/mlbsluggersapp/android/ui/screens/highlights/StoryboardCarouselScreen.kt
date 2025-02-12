@@ -54,7 +54,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
-import androidx.media3.exoplayer.ExoPlayer
 import coil3.compose.AsyncImage
 import com.slimestack.mlbsluggersapp.android.R
 import com.slimestack.mlbsluggersapp.data.models.Storyboard
@@ -63,6 +62,11 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.Locale
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.slimestack.mlbsluggersapp.android.ui.utils.UIConstants.CAPTION_TRANSITION_LABEL
+import com.slimestack.mlbsluggersapp.android.ui.utils.UIConstants.ES_LANGUAGE_CODE
+import com.slimestack.mlbsluggersapp.android.ui.utils.UIConstants.JA_LANGUAGE_CODE
+import com.slimestack.mlbsluggersapp.android.ui.utils.UIConstants.PROGRESS_INDICATOR_TRANSITION_LABEL
+import com.slimestack.mlbsluggersapp.android.ui.utils.UIConstants.SCENE_TRANSITION_LABEL
 
 @Composable
 fun StoryboardCarouselScreen(
@@ -119,7 +123,7 @@ fun StoryboardCarouselScreen(
                             )
                         )
                     },
-                    label = "scene transition"
+                    label = SCENE_TRANSITION_LABEL
                 ) { targetScene ->
                     AsyncImage(
                         modifier = Modifier
@@ -147,15 +151,15 @@ fun StoryboardCarouselScreen(
             ) {
                 AnimatedContent(
                     targetState = when (deviceLanguage) {
-                        "es" -> currentScene.captionEs
-                        "ja" -> currentScene.captionJa
+                        ES_LANGUAGE_CODE -> currentScene.captionEs
+                        JA_LANGUAGE_CODE -> currentScene.captionJa
                         else -> currentScene.captionEn
                     },
                     transitionSpec = {
                         fadeIn(animationSpec = tween(300)) togetherWith
                                 fadeOut(animationSpec = tween(300))
                     },
-                    label = "caption transition"
+                    label = CAPTION_TRANSITION_LABEL
                 ) { caption ->
                     Box(
                         modifier = Modifier
@@ -226,7 +230,7 @@ fun StoryboardCarouselScreen(
         Crossfade(
             targetState = currentSceneIndex,
             animationSpec = tween(durationMillis = 600),
-            label = "progress indicator transition"
+            label = PROGRESS_INDICATOR_TRANSITION_LABEL
         ) { targetIndex ->
             Row(
                 modifier = Modifier
@@ -263,7 +267,7 @@ fun StoryboardCarouselScreen(
             IconButton(onClick = { onNavigateBack() } ) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_close),
-                    contentDescription = stringResource(id = R.string.close),
+                    contentDescription = stringResource(id = R.string.close_btn),
                     tint = Color.White
                 )
             }
@@ -278,8 +282,8 @@ fun StoryboardCarouselScreen(
     LaunchedEffect(currentScene) {
         shouldAdvanceScene = false
         val audioUrl = when (deviceLanguage) {
-            "es" -> currentScene.audioUrlEs
-            "ja" -> currentScene.audioUrlJa
+            ES_LANGUAGE_CODE -> currentScene.audioUrlEs
+            JA_LANGUAGE_CODE -> currentScene.audioUrlJa
             else -> currentScene.audioUrlEn
         }
         

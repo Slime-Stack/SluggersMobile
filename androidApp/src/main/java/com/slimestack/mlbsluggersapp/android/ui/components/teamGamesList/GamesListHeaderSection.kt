@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -35,12 +36,12 @@ fun GamesListHeaderSection(team: Team) {
     ) {
         Column {
             Text(
-                text = "Hey there,",
+                text = stringResource(R.string.games_list_hey_there),
                 fontSize = 20.sp,
                 color = Color.Gray
             )
             Text(
-                text = "${team.shortName} Fan!",
+                text = stringResource(R.string.short_name_fan, team.shortName),
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Bold
             )
@@ -52,21 +53,21 @@ fun GamesListHeaderSection(team: Team) {
                     .crossfade(true)
                     .build(),
                 placeholder = painterResource(R.drawable.ic_launcher),
-                contentDescription = "${team.name} Logo",
+                contentDescription = stringResource(R.string.selected_team_name, team.name),
                 modifier = Modifier.size(48.dp),
                 contentScale = ContentScale.Fit
             )
         }
     }
     Text(
-        text = "Recent Highlights",
+        text = stringResource(R.string.recent_highlights_label),
         fontSize = 24.sp,
         fontWeight = FontWeight.Bold,
         modifier = Modifier
             .padding(start = 16.dp, end = 16.dp, bottom = 5.dp)
     )
     Text(
-        text = "See the latest action from your favorite team!",
+        text = stringResource(R.string.description_see_the_latest_action),
         fontSize = 16.sp,
         color = Color.Gray,
         modifier = Modifier.padding(start = 16.dp, end = 16.dp)

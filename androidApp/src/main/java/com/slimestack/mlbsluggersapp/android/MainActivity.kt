@@ -9,27 +9,29 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.slimestack.mlbsluggersapp.android.ui.navigation.SluggersNavigation
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
         setContent {
             MLBApplicationTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
                 ) {
-                    SluggersNavigation()
+                    SluggersNavigation(splashScreen)
                 }
             }
         }
     }
-}
 
-@Preview
-@Composable
-fun DefaultPreview() {
-    MLBApplicationTheme {
-        SluggersNavigation()
+    @Preview
+    @Composable
+    fun DefaultPreview() {
+        MLBApplicationTheme {
+            SluggersNavigation(splashScreen = installSplashScreen())
+        }
     }
 }

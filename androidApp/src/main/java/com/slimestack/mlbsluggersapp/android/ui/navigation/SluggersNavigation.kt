@@ -5,6 +5,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.splashscreen.SplashScreen
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -25,7 +26,7 @@ import com.slimestack.mlbsluggersapp.android.ui.state.sealed.StoryboardCarouselU
 import com.slimestack.mlbsluggersapp.data.models.GameScheduleData
 
 @Composable
-fun SluggersNavigation() {
+fun SluggersNavigation(splashScreen: SplashScreen) {
     val navController = rememberNavController()
     val teamSelectionViewModel: TeamSelectionViewModel = viewModel()
     val teams by teamSelectionViewModel.teams.collectAsState()
@@ -33,6 +34,7 @@ fun SluggersNavigation() {
     val uiState by storyBoardViewModel.uiState.collectAsState()
 
     NavHost(navController = navController, startDestination = "get_started") {
+            splashScreen.setKeepOnScreenCondition { teams.size == 30 }
         composable("get_started") {
             BaseBackground {
                 GetStartedScreen(onGetStartedClicked = {

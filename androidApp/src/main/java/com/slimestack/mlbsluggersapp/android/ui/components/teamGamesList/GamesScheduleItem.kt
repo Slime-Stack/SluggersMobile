@@ -21,6 +21,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -39,7 +40,7 @@ fun GameScheduleItem(data: GameScheduleData, onGameClicked: (Int) -> Unit) {
     ){
         AsyncImage(
             model = data.imageUrl,
-            contentDescription = "${data.team} Logo",
+            contentDescription = stringResource(R.string.a11y_logo),
             modifier = Modifier
                 .fillMaxWidth()
                 .height(144.dp),
@@ -69,7 +70,7 @@ fun GameScheduleItem(data: GameScheduleData, onGameClicked: (Int) -> Unit) {
             }
             Icon(
                 Icons.Filled.ArrowForward,
-                contentDescription = "See More",
+                contentDescription = stringResource(R.string.ally_see_more_icon),
                 tint = Color.White,
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
